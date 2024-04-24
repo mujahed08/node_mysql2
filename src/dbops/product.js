@@ -1,4 +1,4 @@
-
+import mysql from 'mysql2/promise';
 import { pool } from './mysql2_connect.js';
 
 
@@ -8,7 +8,7 @@ export async function fetchProducts() {
   try {
     const [rows, fields] = await connection.query('SELECT * FROM product');
     console.log('Products:', rows);
-    return rows 
+    return rows
   } catch (error) {
     throw error;
   } finally {
@@ -17,3 +17,24 @@ export async function fetchProducts() {
 }
 
 
+export async function insert_product(product) {
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'rxpad',
+    database: 'billdb'
+  });
+
+  try {
+    // Insert a new record into the 'users' table
+    const [result] = await connection.execute('INSERT INTO product (product_name,product_code,quantity,unit_price,apply_discount,packing) VALUES (?, ?, ?, ?, ?, ?)', [product.product_name, product.product_code, product.quantity, product.unit_price, product.apply_discount, product.packing]);
+
+    // Output the inserted record details
+    console.log('Inserted record ID:', result.insertId);
+  } catch (error) {
+    console.error('Error inserting record:', error);
+  } finally {
+    // Close the connection
+    await connection.end();
+  }
+}
