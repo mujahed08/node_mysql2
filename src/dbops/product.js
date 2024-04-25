@@ -8,7 +8,7 @@ export async function fetchProducts() {
   try {
     const [rows, fields] = await connection.query('SELECT * FROM product');
     console.log('Products:', rows);
-    return rows
+    return rows 
   } catch (error) {
     throw error;
   } finally {
@@ -30,7 +30,8 @@ export async function insert_product(product) {
     const [result] = await connection.execute('INSERT INTO product (product_name,product_code,quantity,unit_price,apply_discount,packing) VALUES (?, ?, ?, ?, ?, ?)', [product.product_name, product.product_code, product.quantity, product.unit_price, product.apply_discount, product.packing]);
 
     // Output the inserted record details
-    console.log('Inserted record ID:', result.insertId);
+    
+    return result.insertId;
   } catch (error) {
     console.error('Error inserting record:', error);
   } finally {
