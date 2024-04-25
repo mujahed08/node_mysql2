@@ -2,6 +2,7 @@
 import express from 'express';
 import { fetchProducts, insert_product } from './dbops/product.js';
 
+<<<<<<< HEAD
 // Create Express app
 const app = express();
 const PORT = 3000;
@@ -26,3 +27,15 @@ app.post('/products', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+=======
+const product = {
+  product_name: "lenovo_laptop",
+  product_code: "nnnn05",
+  quantity: 9,
+  unit_price: 55555,
+  apply_discount: true,
+  packing: "yes",
+};
+
+insert_product(product);
+>>>>>>> feature/ateeq
