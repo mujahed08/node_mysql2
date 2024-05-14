@@ -5,7 +5,9 @@ import { pool } from "./mysql2_connect.js";
 export async function fetchProducts() {
   const connection = await pool.getConnection();
   try {
-    const [rows, fields] = await connection.query("SELECT * FROM product");
+    const [rows, fields] = await connection.query(
+      "SELECT * FROM product order by id desc"
+    );
     console.log("Products:", rows);
     return rows;
   } catch (error) {
@@ -30,7 +32,7 @@ export async function insert_product(product) {
       [
         product.product_name,
         product.product_code,
-        product.quantity,
+        product.qty,
         product.unit_price,
         product.apply_discount,
         product.packing,
