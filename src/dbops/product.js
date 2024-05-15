@@ -48,3 +48,27 @@ export async function insert_product(product) {
     await connection.end();
   }
 }
+
+export async function fetch_product_by_id(product_id) {
+  const connection = await pool.getConnection();
+  try {
+    const [rows] = await connection.execute(
+      "SELECT * FROM product WHERE id = ?",
+      [product_id]
+    );
+    console.log("Products:", rows);
+    return rows[0];
+  } catch (error) {
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
+// const [rows] = await connection.execute('SELECT * FROM your_table WHERE id = ?', [id]);
+
+//     // Release the connection
+//     connection.release();
+
+//     // Return the fetched record
+//     return rows[0];

@@ -1,6 +1,10 @@
 // Import required modules
 import express from "express";
-import { fetchProducts, insert_product } from "./dbops/product.js";
+import {
+  fetch_product_by_id,
+  fetchProducts,
+  insert_product,
+} from "./dbops/product.js";
 import cors from "cors";
 
 // Create Express app
@@ -34,6 +38,13 @@ app.post("/products", async (req, res) => {
   product.apply_discount = true;
   const product_Id = await insert_product(product);
   res.status(201).json({ id: product_Id, ...product });
+});
+// Access the value of the path parameter
+app.get("/product/:product_id", async (req, res) => {
+  const product_id = req.params.product_id;
+  const product = await fetch_product_by_id(product_id);
+  // res.send(`product_id: ${product_id}`);
+  res.status(200).json(product);
 });
 
 // Start the server
